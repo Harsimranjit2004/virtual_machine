@@ -204,8 +204,7 @@ void vm_load_program_from_memory(Vm *vm, Inst *program, size_t program_size)
     vm->program_size = (Word)program_size;
 }
 
-void vm_save_program_to_file(Inst *program, size_t program_size,
-                             const char *file_path)
+void vm_save_program_to_file(const Vm *vm, const char *file_path)
 {
     FILE *f = fopen(file_path, "wb");
     if (f == NULL)
@@ -214,7 +213,7 @@ void vm_save_program_to_file(Inst *program, size_t program_size,
                 file_path, strerror(errno));
         exit(1);
     }
-    fwrite(program, sizeof(program[0]), program_size, f);
+    fwrite(vm->program, sizeof(vm->program[0]), vm->program_size, f);
     if (ferror(f))
     {
         fprintf(stderr, "ERROR: could not write to file `%s`: %s\n",

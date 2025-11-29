@@ -18,8 +18,7 @@ int main(int argc, char **argv)
     vm.program_size =
         (Word)vm_translate_source(source, vm.program, VM_PROGRAM_CAPACITY);
 
-    vm_save_program_to_file(vm.program, (size_t)vm.program_size,
-                            output_file_path);
+    vm_save_program_to_file(&vm, output_file_path);
 
     return 0;
 }

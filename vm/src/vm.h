@@ -75,7 +75,7 @@ Trap vm_execute_inst(Vm *vm);
 void vm_dump_stack(FILE *stream, Vm *vm);
 void vm_load_program_from_memory(Vm *vm, Inst *program, size_t program_size);
 void vm_load_program_from_file(Vm *vm, const char *file_path);
-void vm_save_program_to_file(Inst *program, size_t program_size,
+void vm_save_program_to_file(const Vm *vm,
                              const char *file_path);
 
 // ---------- String_View & Assembler API ----------
