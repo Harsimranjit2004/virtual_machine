@@ -434,18 +434,18 @@ Inst vm_translate_line(String_View line)
 {
     line = sv_trim_left(line);
     String_View inst_name = chop_by_delimiter(&line, ' ');
-
+    String_View operand = sv_trim(chop_by_delimiter(&line, '#'));
     if (sv_equals(inst_name, cstr_as_sv("push")))
     {
         line = sv_trim_left(line);
-        int operand = sv_int(sv_trim_right(line));
-        return (Inst){.type = INST_PUSH, .operand = operand};
+
+        return (Inst){.type = INST_PUSH, .operand = sv_int(operand)};
     }
     else if (sv_equals(inst_name, cstr_as_sv("dup")))
     {
         line = sv_trim_left(line);
-        int operand = sv_int(sv_trim_right(line));
-        return (Inst){.type = INST_DUP, .operand = operand};
+
+        return (Inst){.type = INST_DUP, .operand = sv_int(operand)};
     }
     else if (sv_equals(inst_name, cstr_as_sv("plus")))
     {
@@ -454,8 +454,8 @@ Inst vm_translate_line(String_View line)
     else if (sv_equals(inst_name, cstr_as_sv("jmp")))
     {
         line = sv_trim_left(line);
-        int operand = sv_int(sv_trim_right(line));
-        return (Inst){.type = INST_JMP, .operand = operand};
+
+        return (Inst){.type = INST_JMP, .operand = sv_int(operand)};
     }
     else
     {
@@ -475,7 +475,7 @@ size_t vm_translate_source(String_View source,
         assert(program_size < program_capacity);
         String_View line = sv_trim(
             chop_by_delimiter(&source, '\n'));
-        if (line.count > 0)
+        if (line.count > 0 && *line.data != '#')
         {
             program[program_size++] = vm_translate_line(line);
         }

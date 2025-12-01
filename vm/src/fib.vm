@@ -1,6 +1,8 @@
-push 0
+# Top Comment
+push 0   #comment
 push 1
-dup 1
+# Middle comment
+dup 1  
 dup 1
 plus
 jmp 2
