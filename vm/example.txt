@@ -1,0 +1,11 @@
+# build everything
+make
+
+# assemble source to binary
+./vbasm src/fib.vm fib.out
+
+# run program
+./vmi fib.out
+
+# disassemble binary
+./dbasm fib.out

@@ -1,16 +1,32 @@
 // src/vbasm.c
 #include "vm.h"
+char *shift(int *argc, char ***argv)
+{
+    assert(*argc > 0);
+    char *result = **argv;
+    *argv += 1;
+    *argc -= 1;
+    return result;
+}
 
 int main(int argc, char **argv)
 {
-    if (argc < 3)
+    char *program = shift(&argc, &argv); // skip executable name
+    if (argc == 0)
     {
-        fprintf(stderr, "Usage: %s <source.vm> <output.bin>\n", argv[0]);
-        return 1;
+        fprintf(stderr, "Usage: %s <source.vm> <output.bin>\n", program);
+        exit(1);
     }
+    const char *input_file_path = shift(&argc, &argv);
+    if (argc == 0)
+    {
+        fprintf(stderr, "Usage: %s <source.vm> <output.bin>\n", program);
+        exit(1);
+    }
+    const char *output_file_path = shift(&argc, &argv);
 
-    const char *input_file_path = argv[1];
-    const char *output_file_path = argv[2];
+    // const char *input_file_path = argv[1];
+    // const char *output_file_path = argv[2];
 
     Vm vm = {0};
     String_View source = slurp_file(input_file_path);

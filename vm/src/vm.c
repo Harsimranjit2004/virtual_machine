@@ -179,6 +179,22 @@ Trap vm_execute_inst(Vm *vm)
     return TRAP_OK;
 }
 
+Trap vm_execute_program(Vm *vm, int limit)
+{
+    while (limit != 0 && !vm->halt)
+    {
+        Trap trap = vm_execute_inst(vm);
+        if (trap != TRAP_OK)
+        {
+            return trap;
+        }
+        if (limit > 0)
+            limit--;
+    }
+
+    return TRAP_OK;
+}
+
 // ---------- Debug stack ----------
 void vm_dump_stack(FILE *stream, Vm *vm)
 {
